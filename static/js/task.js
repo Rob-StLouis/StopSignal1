@@ -682,7 +682,8 @@ var StroopExperiment = function() {
 				'rt': rt,
 				'trial_duration': timenum,
 				'time': "duringtrial",
-			'score': ""
+			'score': "",
+			"thistrial":thistrial
 				//'scorec': "",
 				//'scoref': ""
 			});
@@ -754,7 +755,8 @@ var StroopExperiment = function() {
 			'hit': -1,
 			'rt': rt,
 			'trial_duration': timenum,
-			'score':""
+			'score':"",
+			"thistrial":thistrial
 			//'scorec': "",
 			//'scoref': ""
 
@@ -954,7 +956,7 @@ var StroopExperiment = function() {
 
 		if(hits>misses){
 			//var score1 = ((unad_count)*(unad_count))/3 ;
-			var score1 = Math.sqrt(Math.sqrt(Math.sqrt(unad_count)))*20
+			var score1 = Math.sqrt(Math.sqrt(Math.sqrt(unad_count)))*20 +Math.random()*8
 
 		} else{
 
@@ -1013,7 +1015,8 @@ var StroopExperiment = function() {
 			'hit': "",
 			'rt': "",
 			'trial_duration': timenum,
-			'score': score1
+			'score': score1,
+			"thistrial":thistrial
 		});
 
 		total_score = total_score + adj_trialscore
