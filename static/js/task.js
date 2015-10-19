@@ -46,7 +46,7 @@ var instructionPages = [ // add as a list as many pages as you like
 ********************/
 
 
-var numbversions=12;
+var numbversions=20;
 var version =0;
 
 var rl = Math.random()>.5;
@@ -54,6 +54,8 @@ var rl = Math.random()>.5;
 var rlstims = [];
 
 var errorstart =0;
+
+var total_score= 0;
 
 
 //tell which side the colors show up on.
@@ -100,6 +102,8 @@ var StroopExperiment = function() {
 
 	var target_shapes = _.sample(stims,3);
 	var target_colors = _.shuffle(colstims,3);
+
+	total_score = 0;
 
 
 	//set order
@@ -833,10 +837,12 @@ var StroopExperiment = function() {
 	var finish = function() {
 	    $("body").unbind("keydown", response_handler); // Unbind keys
 		d3.select("#InstructionStim").remove();
-		//alert(trialscore);
+
 
 		currentview = new Questionnaire();
 	};
+
+	//var fing
 
 
 
@@ -1010,6 +1016,8 @@ var StroopExperiment = function() {
 			'score': score1
 		});
 
+		total_score = total_score + adj_trialscore
+
 
 
 		//alert(stim);
@@ -1062,7 +1070,7 @@ var Questionnaire = function() {
 		$("#resubmit").click(resubmit);
 	};
 
-	alert(version);
+
 
 	resubmit = function() {
 		replaceBody("<h1>Trying to resubmit...</h1>");
@@ -1085,6 +1093,7 @@ var Questionnaire = function() {
 	
 	$("#next").click(function () {
 	    record_responses();
+		alert( "You earned "+total_score+" points in the last game!" );
 		version = version +1;
 		if (version >= numbversions){
 			psiTurk.saveData({
