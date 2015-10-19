@@ -1,0 +1,248 @@
+<div id="container-instructions">
+
+    <h1>Instructions</h1>
+
+    <hr>
+
+    <div class="instructions well">
+
+        <p>
+            If the shape of the stimuli matches one of the shapes you see below, then you should press the associated button.
+            If the stimuli matches both a target color and a target shape, ignore the color and just press the button associated
+            with the target shape.
+
+            For instance in the situation below, you should press "j", even though it is green. Pressing "s" here would be an error.
+            Again, when both the color and the shape of the stimuli match the targets, ignore the color and just press the key associated with the shape.
+
+
+
+        </p>
+
+        <div id = "stim"></div>
+
+
+
+        <div id="query"></div>
+
+        <p>
+
+
+
+        </p>
+
+
+        <script type="text/javascript">
+            //console.log(psiTurk.getInstructionIndicator())
+            function polygon(ctx, x, y, radius, sides, startAngle, anticlockwise) {
+                if (sides < 3) return;
+                var a = (Math.PI * 2)/sides;
+                a = anticlockwise?-a:a;
+                ctx.save();
+                ctx.translate(x,y);
+                ctx.rotate(startAngle);
+                ctx.moveTo(radius,0);
+                for (var i = 1; i < sides; i++) {
+                    ctx.lineTo(radius*Math.cos(a*i),radius*Math.sin(a*i));
+                }
+                ctx.closePath();
+                ctx.restore();
+            }
+
+
+            //returns arbitrary stars
+
+            function drawStar(ctx,cx,cy,spikes,outerRadius,innerRadius){
+                var rot=Math.PI/2*3;
+                var x=cx;
+                var y=cy;
+                var step=Math.PI/spikes;
+
+                ctx.strokeSyle="#000";
+                ctx.moveTo(cx,cy-outerRadius);
+                for(i=0;i<spikes;i++){
+                    x=cx+Math.cos(rot)*outerRadius;
+                    y=cy+Math.sin(rot)*outerRadius;
+                    ctx.lineTo(x,y);
+                    rot+=step;
+
+                    x=cx+Math.cos(rot)*innerRadius;
+                    y=cy+Math.sin(rot)*innerRadius;
+                    ctx.lineTo(x,y);
+                    rot+=step
+                }
+                ctx.lineTo(cx,cy-outerRadius);
+
+            }
+
+
+
+            var drawcolor = function(ctx,stim_color) {
+
+                switch (stim_color) {
+                    case 0:
+                        var colorstim = "red";
+                        break;
+                    case 1:
+                        var colorstim = "blue";
+                        break;
+                    case 2:
+                        var colorstim = "green";
+
+                }
+
+
+                ctx.fillStyle = colorstim;
+            };
+
+            var drawshapes = function(ctx,centerx,centery,radius,radius_inner,stim_type) {
+
+                ctx.beginPath();
+
+                switch (stim_type) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                        polygon(ctx, centerx, centery, radius, stim_type + 3, Math.PI * 1.5, false);
+                        ctx.stroke();
+                        break;
+                    case 4:
+                    case 5:
+                        drawStar(ctx, centerx, centery, stim_type, radius, radius_inner);
+                        ctx.stroke();
+                        ctx.closePath();
+                        break;
+                    case 6:
+                        drawStar(ctx, centerx, centery, stim_type + 2, radius, radius_inner);
+                        ctx.stroke();
+                        ctx.closePath();
+                        break;
+
+                    case 7:
+                        drawStar(ctx, centerx, centery, 20, radius, radius_inner);
+                        ctx.stroke();
+                        ctx.closePath();
+                        break;
+
+                    case 8:
+                        ctx.arc(centerx, centery, radius, 0, Math.PI * 2, true);
+                        ctx.fill();
+                        break;
+                    case 9:
+                        polygon(ctx, centerx, centery, radius, 4,Math.PI *.25, false);
+                        ctx.stroke();
+
+                }
+
+
+
+                ctx.fill();
+
+            };
+
+            d3.select("#query")
+                    .append("canvas")
+                    .attr("width", 600)
+                    .attr("height", 200)
+                    .attr("id", "InstructionStim");
+
+            var canvasIn = document.getElementById('InstructionStim');
+            var ctxIn = canvasIn.getContext('2d');
+
+            ctxIn.font = "20px Arial";
+
+
+            var offset1 = 350;
+            var offset2 = 0;
+
+            ctxIn.fillText("Press",10,20);
+            ctxIn.fillText("S",25,45);
+
+            ctxIn.fillText("Press",100,20);
+            ctxIn.fillText("D",115,45);
+
+            ctxIn.fillText("Press",190,20);
+            ctxIn.fillText("F",205,45);
+
+
+            ctxIn.fillText("Press",360,20);
+            ctxIn.fillText("J",375,45);
+
+            ctxIn.fillText("Press",450,20);
+            ctxIn.fillText("K",465,45);
+
+            ctxIn.fillText("Press",540,20);
+            ctxIn.fillText("L",555,45);
+
+
+            //shapes
+
+            ctxIn.fillStyle = "black";
+
+            drawshapes(ctxIn,offset1+30,75,20,10,1);
+
+            drawshapes(ctxIn,offset1+120,75,20,10,2);
+
+            drawshapes(ctxIn,offset1+210,75,20,10,3);
+
+            //colors
+
+            ctxIn.fillStyle = "green";
+
+            drawshapes(ctxIn,offset2+30,75,20,10,9);
+
+            ctxIn.fillStyle = "red";
+
+            drawshapes(ctxIn,offset2+120,75,20,10,9);
+
+            ctxIn.fillStyle = "blue";
+            drawshapes(ctxIn,offset2+210,75,20,10,9);
+
+
+            d3.select("#stim")
+                    .append("canvas")
+                    .attr("width", 600)
+                    .attr("height", 450)
+                    .attr("id", "canvasStim");
+
+            var canvas = document.getElementById('canvasStim');
+            var ctx = canvas.getContext('2d');
+
+            var centerx = 300;
+            var centery = 300;
+            var radius = 150;
+            var radius_inner = 75;
+            var stimcolor = "red";
+
+
+            drawcolor(ctx, 2);
+
+
+            drawshapes(ctx,centerx,centery,radius,radius_inner,1);
+
+
+
+        </script>
+
+    </div>
+
+    <hr>
+
+    <div class="instructionsnav">
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" id="next" value="next" class="btn btn-primary btn-lg previous">
+                <span class="glyphicon glyphicon-arrow-left"></span> Previous
+                </button>
+            </div>
+            <div class="col-xs-8">
+            </div>
+            <div class="col-xs-2">
+                <button type="button" id="next" value="next" class="btn btn-primary btn-lg continue">
+                Next <span class="glyphicon glyphicon-arrow-right"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
