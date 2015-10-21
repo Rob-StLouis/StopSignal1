@@ -27,7 +27,7 @@ var/
 *.egg
 
 #This is to keep it from copying over to new sections
-config.txt
+#config.txt
 participants.db
 
 
