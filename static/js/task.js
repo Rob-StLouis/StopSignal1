@@ -46,7 +46,7 @@ var instructionPages = [ // add as a list as many pages as you like
 ********************/
 
 
-var numbversions=20;
+var numbversions=40;
 var version =0;
 
 var rl = Math.random()>.5;
@@ -56,6 +56,8 @@ var rlstims = [];
 var errorstart =0;
 
 var total_score= 0;
+
+var multiplyer  = 1;
 
 
 //tell which side the colors show up on.
@@ -82,7 +84,7 @@ var StroopExperiment = function() {
 	var stimNumber = 9;
 	var colorNumber = 3;
 
-	var trialNumber = 32;
+	var trialNumber = 4;
 
 	var thistrial = 0;
 
@@ -107,6 +109,42 @@ var StroopExperiment = function() {
 
 
 	//set order
+
+	multiplyer=1;
+
+	var bonus_message= "";
+
+	switch(version ){
+		case(2):
+			multiplyer = 2;
+			var bonus_message = "This is a bonus round, you can win twice as many points!";
+			break;
+		case(15):
+			multiplyer = 2;
+			var bonus_message = "This is a bonus round, you can win twice as many points!";
+			break;
+		case(20):
+			multiplyer = 2;
+			var bonus_message = "This is a bonus round, you can win twice as many points!";
+
+			break;
+		case(25):
+			multiplyer = 2;
+			var bonus_message = "This is a bonus round, you can win twice as many points!";
+
+			break;
+		case(30):
+			multiplyer = 2;
+			var bonus_message = "This is a bonus round, you can win twice as many points!";
+
+			break;
+		case(35):
+			multiplyer = 2;
+			var bonus_message = "This is a bonus round, you can win twice as many points!";
+			break;
+
+
+	}
 
 
 
@@ -165,7 +203,7 @@ var StroopExperiment = function() {
 	var timingnum = [];
 
 
-	for (i=0; i < trialNumber-1;i++){
+	for (i=0; i < trialNumber;i++){
 		timingnum.push(1250 +(Math.random()*1000))
 	};
 
@@ -308,18 +346,18 @@ var StroopExperiment = function() {
 
 			finish();
 		}
-		//else if (firsttrial===true){
+		else if (firsttrial===true){
         //
-		//	d3.select("#query")
-		//		.append("canvas")
-		//		.attr("width", 600)
-		//		.attr("height", 200)
-		//		.attr("id", "InstructionStim");
+			d3.select("#query")
+				.append("canvas")
+				.attr("width", 600)
+				.attr("height", 200)
+				.attr("id", "InstructionStim");
         //
-		//	var canvasIn = document.getElementById('InstructionStim');
-		//	var ctxIn = canvasIn.getContext('2d');
-        //
-		//	ctxIn.font = "20px Arial";
+			var canvasIn = document.getElementById('InstructionStim');
+			var ctxIn = canvasIn.getContext('2d');
+
+			ctxIn.font = "20px Arial";
         //
         //
         //
@@ -329,8 +367,8 @@ var StroopExperiment = function() {
 		//	ctxIn.fillText("Press",10,20);
 		//	ctxIn.fillText("S",25,45);
         //
-		//	ctxIn.fillText("Press",100,20);
-		//	ctxIn.fillText("D",115,45);
+			ctxIn.fillText("Get ready to start!",100,20);
+			ctxIn.fillText(bonus_message,115,45);
         //
 		//	ctxIn.fillText("Press",190,20);
 		//	ctxIn.fillText("F",205,45);
@@ -366,14 +404,21 @@ var StroopExperiment = function() {
 		//	drawshapes(ctxIn,offset2+210,75,20,10,9);
         //
 		//	listeningstart = true;
-		//	firsttrial = false;
+			firsttrial = false;
+			setTimeout(function(){
+				next()}, 1500);
+
+
+
         //
-		//}
+		}
 		else {
 			adj_trialscore = 0;
 			hits = 0;
 			misses = 0;
 			rt_bonus = 0;
+
+			d3.select("#InstructionStim").remove();
 
 			thistrial = thistrial+1;
 			stim = stimuli.shift();
@@ -956,7 +1001,7 @@ var StroopExperiment = function() {
 
 		if(hits>misses){
 			//var score1 = ((unad_count)*(unad_count))/3 ;
-			var score1 = Math.sqrt(Math.sqrt(Math.sqrt(unad_count)))*20 +Math.random()*8
+			var score1 = (Math.sqrt(Math.sqrt(Math.sqrt(unad_count)))*20 +Math.random()*8) * multiplyer;
 
 		} else{
 
@@ -1019,7 +1064,7 @@ var StroopExperiment = function() {
 			"thistrial":thistrial
 		});
 
-		total_score = total_score + adj_trialscore
+		total_score = total_score + adj_trialscore;
 
 
 
