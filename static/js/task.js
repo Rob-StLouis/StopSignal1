@@ -81,8 +81,8 @@ var StroopExperiment = function() {
 
 
 
-	var stimNumber = 9;
-	var colorNumber = 3;
+	var stimNumber = 1;
+	var colorNumber = 2;
 
 	var trialNumber = 16;
 
@@ -117,7 +117,7 @@ var StroopExperiment = function() {
 	switch(version ){
 		case(10):
 			multiplyer = 2;
-			var bonus_message = "This is a bonus round, you can win twice as many points!";
+			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
 			break;
 		case(15):
 			multiplyer = 2;
