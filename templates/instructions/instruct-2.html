@@ -8,17 +8,17 @@
 
         <p>
             In this game, you will see a series of colored shapes. Each time you see a shape, your goal is to press the correct button as many times as
-            possible before the shape disappears and is replaced by an X.
+            possible, depending on the color of that shape.
         </p>
         <p>
-            You will see a shape that looks as follows:
+            The game will look as follows:
 
         </p>
 
     <div id = "stim"></div>
 
     <p>
-        And you will see the following, which tells you which shapes and colors are "targets" and which button you should press if you see either of them.
+        And you will see the following, which tells which button you should press if the shape is a certain color.
 
     </p>
 
@@ -26,7 +26,7 @@
     <div id="query"></div>
 
     <p>
-        If the color of the stimuli matches one of the shapes or colors you see below it then you should press the associated button. In this case you should press "s", and then keep pressing as fast as you can
+        When you figure out which button to press, you should press that button as quickly as possible. In this case you should press "j", and then keep pressing as fast as you can
         until you see a black "X". As soon as the black "X" is visible, you should to stop pressing the button as fast as possible.
 
     </p>
@@ -153,14 +153,14 @@
         ctxIn.font = "20px Arial";
 
 
-        var offset1 = 350;
+        var offset1 = 0;
         var offset2 = 0;
 
-        ctxIn.fillText("Press",10,20);
-        ctxIn.fillText("S",25,45);
-
-        ctxIn.fillText("Press",100,20);
-        ctxIn.fillText("D",115,45);
+//        ctxIn.fillText("Press",10,20);
+//        ctxIn.fillText("S",25,45);
+//
+//        ctxIn.fillText("Press",100,20);
+//        ctxIn.fillText("D",115,45);
 
         ctxIn.fillText("Press",190,20);
         ctxIn.fillText("F",205,45);
@@ -169,35 +169,38 @@
         ctxIn.fillText("Press",360,20);
         ctxIn.fillText("J",375,45);
 
-        ctxIn.fillText("Press",450,20);
-        ctxIn.fillText("K",465,45);
-
-        ctxIn.fillText("Press",540,20);
-        ctxIn.fillText("L",555,45);
+//        ctxIn.fillText("Press",450,20);
+//        ctxIn.fillText("K",465,45);
+//
+//        ctxIn.fillText("Press",540,20);
+//        ctxIn.fillText("L",555,45);
 
 
         //shapes
 
-        ctxIn.fillStyle = "black";
+//        ctxIn.fillStyle = "black";
 
-        drawshapes(ctxIn,offset1+30,75,20,10,1);
+//        drawshapes(ctxIn,offset1+30,75,20,10,1);
+//
+//        drawshapes(ctxIn,offset1+120,75,20,10,2);
 
-        drawshapes(ctxIn,offset1+120,75,20,10,2);
+        drawcolor(ctxIn,1);
 
-        drawshapes(ctxIn,offset1+210,75,20,10,3);
+        drawshapes(ctxIn,offset1+210,75,20,10,2);
 
         //colors
 
-        ctxIn.fillStyle = "green";
+//        ctxIn.fillStyle = "green";
 
-        drawshapes(ctxIn,offset2+30,75,20,10,9);
+        drawcolor(ctxIn,2);
+        drawshapes(ctxIn,380,75,20,10,2);
 
-        ctxIn.fillStyle = "red";
-
-        drawshapes(ctxIn,offset2+120,75,20,10,9);
-
-        ctxIn.fillStyle = "blue";
-        drawshapes(ctxIn,offset2+210,75,20,10,9);
+//        ctxIn.fillStyle = "red";
+//
+//        drawshapes(ctxIn,offset2+120,75,20,10,9);
+//
+//        ctxIn.fillStyle = "blue";
+//        drawshapes(ctxIn,offset2+210,75,20,10,9);
 
 
         d3.select("#stim")
@@ -213,13 +216,13 @@
         var centery = 300;
         var radius = 150;
         var radius_inner = 75;
-        var stimcolor = "red";
+        var stimcolor = "blue";
 
 
         drawcolor(ctx, 2);
 
 
-        drawshapes(ctx,centerx,centery,radius,radius_inner,6);
+        drawshapes(ctx,centerx,centery,radius,radius_inner,2);
 
 
 

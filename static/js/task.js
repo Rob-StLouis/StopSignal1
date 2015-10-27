@@ -15,7 +15,7 @@ var mycounterbalance = counterbalance;  // they tell you which condition you hav
 var pages = [
 	"instructions/instruct-1.html",
 	"instructions/instruct-2.html",
-	"instructions/instruct-3.html",
+	//"instructions/instruct-3.html",
 	"instructions/instruct-ready.html",
 	"stage.html",
 	"postquestionnaire.html"
@@ -26,7 +26,7 @@ psiTurk.preloadPages(pages);
 var instructionPages = [ // add as a list as many pages as you like
 	"instructions/instruct-1.html",
 	"instructions/instruct-2.html",
-	"instructions/instruct-3.html",
+	//"instructions/instruct-3.html",
 	"instructions/instruct-ready.html"
 ];
 
@@ -102,7 +102,7 @@ var StroopExperiment = function() {
 
 
 
-	var target_shapes = _.sample(stims,3);
+	//var target_shapes = _.sample(stims,3);
 	var target_colors = _.shuffle(colstims,3);
 
 	total_score = 0;
@@ -121,26 +121,26 @@ var StroopExperiment = function() {
 			break;
 		case(15):
 			multiplyer = 2;
-			var bonus_message = "This is a bonus round, you can win twice as many points!";
+			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
 			break;
 		case(20):
 			multiplyer = 2;
-			var bonus_message = "This is a bonus round, you can win twice as many points!";
+			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
 
 			break;
 		case(25):
 			multiplyer = 2;
-			var bonus_message = "This is a bonus round, you can win twice as many points!";
+			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
 
 			break;
 		case(30):
 			multiplyer = 2;
-			var bonus_message = "This is a bonus round, you can win twice as many points!";
+			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
 
 			break;
 		case(35):
 			multiplyer = 2;
-			var bonus_message = "This is a bonus round, you can win twice as many points!";
+			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
 			break;
 
 
@@ -150,16 +150,16 @@ var StroopExperiment = function() {
 
 
 	if(rlstims[version]===0){
-		var offset1 = 350;
-		var offset2 = 0;
-		var colorcorrect = ["s","d","f"];
-		var shapecorrect = ["j","k","l"];
+		var offset1 = 380;
+		var offset2 = 210;
+		var color1 = "j";
+		var color2 = "f";
 
 	}else{
-		var offset1 = 0;
-		var offset2 = 350;
-		var colorcorrect = ["j","k","l"];
-		var shapecorrect = ["s","d","f"];
+		var offset1 = 210;
+		var offset2 = 380;
+		var color1 = "f";
+		var color2 = "j";
 	}
 
 
@@ -167,23 +167,32 @@ var StroopExperiment = function() {
 
 	var stimuli = [];
 
-
-	for (var i = 1; i <= trialNumber/4; i++) {
-		var colorindex = _.sample([0,1,2],1);
-		var shapeindex = _.sample([0,1,2],1);
-		stimuli.push([target_shapes[shapeindex], target_colors[colorindex],colorindex,shapeindex]);
+	for (var i = 1; i <= trialNumber/2; i++) {
+		stimuli.push([2, 1, color1])
 	}
 
-	var distract_shapes = _.without(stims,target_shapes[0],target_shapes[1],target_shapes[2]);
-
-
-	for (var i = 1; i <= trialNumber*(3/4); i++) {
-		var colorindex = _.sample([0,1,2],1);
-		var shapeindex = _.sample([0,1,2,3,4,5],1);
-
-		stimuli.push([distract_shapes[shapeindex], target_colors[colorindex],colorindex,"none"]);
-
+	for (var i = 1; i <= trialNumber/2; i++) {
+		stimuli.push([2, 2, color2])
 	}
+
+
+
+	//for (var i = 1; i <= trialNumber/4; i++) {
+	//	var colorindex = _.sample([0,1,2],1);
+	//	var shapeindex = _.sample([0,1,2],1);
+	//	stimuli.push([target_shapes[shapeindex], target_colors[colorindex],colorindex,shapeindex]);
+	//}
+    //
+	//var distract_shapes = _.without(stims,target_shapes[0],target_shapes[1],target_shapes[2]);
+    //
+    //
+	//for (var i = 1; i <= trialNumber*(3/4); i++) {
+	//	var colorindex = _.sample([0,1,2],1);
+	//	var shapeindex = _.sample([0,1,2,3,4,5],1);
+    //
+	//	stimuli.push([distract_shapes[shapeindex], target_colors[colorindex],colorindex,"none"]);
+    //
+	//}
 
 	//alert(stimuli.length);
 
@@ -445,132 +454,132 @@ var StroopExperiment = function() {
 
 
 
-			if (Math.random()<.1){
-				if (offset1===350){
-					//switch shapes to left
-					offset1=0;
-					offset2=350;
-					switch(stim[3]) {
-						case "0":
-							stim[3] = "s";
-							break;
-						case "1":
-							stim[3] = "d";
-							break;
-						case "2":
-							stim[3] = "f";
-							break;
-					}
-
-					switch(stim[2]) {
-						case "0":
-							stim[2] = "j";
-							break;
-						case "1":
-							stim[2] = "k";
-							break;
-						case "2":
-							stim[2] = "l";
-							break;
-					}
-
-
-
-
-				}else{
-					//switch shapes to right
-					offset1=350;
-					offset2=0;
-
-					switch(stim[3]) {
-						case "0":
-							stim[3] = "j";
-							break;
-						case "1":
-							stim[3] = "k";
-							break;
-						case "2":
-							stim[3] = "l";
-							break;
-					}
-
-					switch(stim[2]) {
-						case "0":
-							stim[2] = "s";
-							break;
-						case "1":
-							stim[2] = "d";
-							break;
-						case "2":
-							stim[2] = "f";
-							break;
-					}
-				}
-
-
-			}
-
-			if (offset1===350){
-				//switch shapes to left
-
-				//alert([typeof stim[2],stim[2], typeof ["2"]])
-
-				switch(stim[3][0]) {
-					case 0:
-						stim[3] = "j";
-						break;
-					case 1:
-						stim[3] = "k";
-						break;
-					case 2:
-						stim[3] = "l";
-						break;
-				}
-
-				switch(stim[2][0]) {
-					case 0:
-						stim[2] = "s";
-						break;
-					case 1:
-						stim[2] = "d";
-						break;
-					case 2:
-						stim[2] = "f";
-						break;
-				}
-
-
-
-
-			}else{
-				//switch shapes to right
-
-					switch(stim[3][0]) {
-						case 0:
-							stim[3] = "s";
-							break;
-						case 1:
-							stim[3] = "d";
-							break;
-						case 2:
-							stim[3] = "f";
-							break;
-					}
-
-					switch(stim[2][0]) {
-						case 0:
-							stim[2] = "j";
-							break;
-						case 1:
-							stim[2] = "k";
-							break;
-						case 2:
-							stim[2] = "l";
-							break;
-					}
-
-
-			}
+			//if (Math.random()<.1){
+			//	if (offset1===350){
+			//		//switch shapes to left
+			//		offset1=0;
+			//		offset2=350;
+			//		switch(stim[3]) {
+			//			case "0":
+			//				stim[3] = "s";
+			//				break;
+			//			case "1":
+			//				stim[3] = "d";
+			//				break;
+			//			case "2":
+			//				stim[3] = "f";
+			//				break;
+			//		}
+            //
+			//		switch(stim[2]) {
+			//			case "0":
+			//				stim[2] = "j";
+			//				break;
+			//			case "1":
+			//				stim[2] = "k";
+			//				break;
+			//			case "2":
+			//				stim[2] = "l";
+			//				break;
+			//		}
+            //
+            //
+            //
+            //
+			//	}else{
+			//		//switch shapes to right
+			//		offset1=350;
+			//		offset2=0;
+            //
+			//		switch(stim[3]) {
+			//			case "0":
+			//				stim[3] = "j";
+			//				break;
+			//			case "1":
+			//				stim[3] = "k";
+			//				break;
+			//			case "2":
+			//				stim[3] = "l";
+			//				break;
+			//		}
+            //
+			//		switch(stim[2]) {
+			//			case "0":
+			//				stim[2] = "s";
+			//				break;
+			//			case "1":
+			//				stim[2] = "d";
+			//				break;
+			//			case "2":
+			//				stim[2] = "f";
+			//				break;
+			//		}
+			//	}
+            //
+            //
+			//}
+            //
+			//if (offset1===350){
+			//	//switch shapes to left
+            //
+			//	//alert([typeof stim[2],stim[2], typeof ["2"]])
+            //
+			//	switch(stim[3][0]) {
+			//		case 0:
+			//			stim[3] = "j";
+			//			break;
+			//		case 1:
+			//			stim[3] = "k";
+			//			break;
+			//		case 2:
+			//			stim[3] = "l";
+			//			break;
+			//	}
+            //
+			//	switch(stim[2][0]) {
+			//		case 0:
+			//			stim[2] = "s";
+			//			break;
+			//		case 1:
+			//			stim[2] = "d";
+			//			break;
+			//		case 2:
+			//			stim[2] = "f";
+			//			break;
+			//	}
+            //
+            //
+            //
+            //
+			//}else{
+			//	//switch shapes to right
+            //
+			//		switch(stim[3][0]) {
+			//			case 0:
+			//				stim[3] = "s";
+			//				break;
+			//			case 1:
+			//				stim[3] = "d";
+			//				break;
+			//			case 2:
+			//				stim[3] = "f";
+			//				break;
+			//		}
+            //
+			//		switch(stim[2][0]) {
+			//			case 0:
+			//				stim[2] = "j";
+			//				break;
+			//			case 1:
+			//				stim[2] = "k";
+			//				break;
+			//			case 2:
+			//				stim[2] = "l";
+			//				break;
+			//		}
+            //
+            //
+			//}
 			//alert(typeof stim[2][0]);
 
 
@@ -580,11 +589,7 @@ var StroopExperiment = function() {
 
 
 
-			ctxIn.fillText("Press",10,20);
-			ctxIn.fillText("S",25,45);
 
-			ctxIn.fillText("Press",100,20);
-			ctxIn.fillText("D",115,45);
 
 			ctxIn.fillText("Press",190,20);
 			ctxIn.fillText("F",205,45);
@@ -593,36 +598,29 @@ var StroopExperiment = function() {
 			ctxIn.fillText("Press",360,20);
 			ctxIn.fillText("J",375,45);
 
-			ctxIn.fillText("Press",450,20);
-			ctxIn.fillText("K",465,45);
-
-			ctxIn.fillText("Press",540,20);
-			ctxIn.fillText("L",555,45);
 
 
 			//shapes
 
 			ctxIn.fillStyle = "black";
 
-			drawshapes(ctxIn,offset1+30,75,20,10,target_shapes[0]);
+			drawcolor(ctxIn,1);
 
-			drawshapes(ctxIn,offset1+120,75,20,10,target_shapes[1]);
-
-			drawshapes(ctxIn,offset1+210,75,20,10,target_shapes[2]);
+			drawshapes(ctxIn,offset1,75,20,10,2);
 
 			//colors
 
-			drawcolor(ctxIn,target_colors[0]);
+			drawcolor(ctxIn,2);
 
-			drawshapes(ctxIn,offset2+30,75,20,10,9);
+			drawshapes(ctxIn,offset2,75,20,10,2);
 
-			drawcolor(ctxIn,target_colors[1]);
-
-			drawshapes(ctxIn,offset2+120,75,20,10,9);
-
-			drawcolor(ctxIn,target_colors[2]);
-
-			drawshapes(ctxIn,offset2+210,75,20,10,9);
+			//drawcolor(ctxIn,target_colors[1]);
+            //
+			//drawshapes(ctxIn,offset2+120,75,20,10,9);
+            //
+			//drawcolor(ctxIn,target_colors[2]);
+            //
+			//drawshapes(ctxIn,offset2+210,75,20,10,9);
 
 
 
@@ -671,14 +669,14 @@ var StroopExperiment = function() {
 			response;
 
 		switch (keyCode) {
-			case 83:
-				// "S"
-				response = "s";
-				break;
-			case 68:
-				// "D"
-				response = "d";
-				break;
+			//case 83:
+			//	// "S"
+			//	response = "s";
+			//	break;
+			//case 68:
+			//	// "D"
+			//	response = "d";
+			//	break;
 			case 70:
 				// "F"
 				response = "f";
@@ -688,14 +686,14 @@ var StroopExperiment = function() {
 				// "J"
 				response = "j";
 				break;
-			case 75:
-				// "K"
-				response = "k";
-				break;
-			case 76:
-				// "L"
-				response = "l";
-				break;
+			//case 75:
+			//	// "K"
+			//	response = "k";
+			//	break;
+			//case 76:
+			//	// "L"
+			//	response = "l";
+			//	break;
             //
             //
 			//default:
@@ -703,13 +701,21 @@ var StroopExperiment = function() {
 			//	break;
 		}
 
-			if (stim[3] === "none" && response === stim[2]) {
-				var hit = 1;
-			}else if (response === stim[3]) {
+			//if (stim[3] === "none" && response === stim[2]) {
+			//	var hit = 1;
+			//}else if (response === stim[3]) {
+			//var hit = 1;
+			//} else {
+			//var hit = -1;
+			//}
+
+		if (stim[2] === response){
 			var hit = 1;
-			} else {
+			//alert([ typeof stim[2],typeof response,hit]);
+		}else{
 			var hit = -1;
-			}
+			//alert([typeof stim[2], typeof response,hit]);
+		}
 		var rt = new Date().getTime() - wordon;
 		//alert([stim,response]);
 
@@ -754,14 +760,14 @@ var StroopExperiment = function() {
 		var rt = new Date().getTime() - errorstart;
 
 		switch (keyCode) {
-			case 83:
-				// "S"
-				response = "s";
-				break;
-			case 68:
-				// "D"
-				response = "d";
-				break;
+			//case 83:
+			//	// "S"
+			//	response = "s";
+			//	break;
+			//case 68:
+			//	// "D"
+			//	response = "d";
+			//	break;
 			case 70:
 				// "F"
 				response = "f";
@@ -771,14 +777,14 @@ var StroopExperiment = function() {
 				// "J"
 				response = "j";
 				break;
-			case 75:
-				// "K"
-				response = "k";
-				break;
-			case 76:
-				// "L"
-				response = "l";
-				break;
+			//case 75:
+			//	// "K"
+			//	response = "k";
+			//	break;
+			//case 76:
+			//	// "L"
+			//	response = "l";
+			//	break;
 			//
 			//
 			//default:
