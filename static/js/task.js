@@ -117,30 +117,30 @@ var StroopExperiment = function() {
 	switch(version ){
 		case(10):
 			multiplyer = 2;
-			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
+			var bonus_message = "This is a high-effort round, please try hard!";
 			break;
 		case(15):
 			multiplyer = 2;
-			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
+			var bonus_message = "This is a high-effort round, please try hard!";
 			break;
 		case(20):
 			multiplyer = 2;
-			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
+			var bonus_message = "This is a high-effort round, please try hard!";
 
 			break;
 		case(25):
 			multiplyer = 2;
-			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
+			var bonus_message = "This is a high-effort round, please try hard!";
 
 			break;
 		case(30):
 			multiplyer = 2;
-			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
+			var bonus_message = "This is a high-effort round, please try hard!";
 
 			break;
 		case(35):
 			multiplyer = 2;
-			var bonus_message = "This is a high-performance round, try has hard as you can this round!";
+			var bonus_message = "This is a high-effort round, please try hard!";
 			break;
 
 
@@ -376,7 +376,7 @@ var StroopExperiment = function() {
 		//	ctxIn.fillText("Press",10,20);
 		//	ctxIn.fillText("S",25,45);
         //
-			ctxIn.fillText("Get ready to start!",100,20);
+			ctxIn.fillText("Get ready to start!",115,20);
 			ctxIn.fillText(bonus_message,115,45);
         //
 		//	ctxIn.fillText("Press",190,20);
@@ -1007,7 +1007,7 @@ var StroopExperiment = function() {
 
 		if(hits>misses){
 			//var score1 = ((unad_count)*(unad_count))/3 ;
-			var score1 = (Math.sqrt(Math.sqrt(Math.sqrt(unad_count)))*20 +Math.random()*8) * multiplyer;
+			var score1 = (Math.sqrt(Math.sqrt(Math.sqrt(unad_count)))*20 +( Math.random() -.5 ) *30) * multiplyer;
 
 		} else{
 
