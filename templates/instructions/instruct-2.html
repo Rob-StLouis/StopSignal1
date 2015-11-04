@@ -7,8 +7,7 @@
     <div class="instructions well">
 
         <p>
-            In this game, you will see a series of colored shapes. Each time you see a shape, your goal is to press the correct button as many times as
-            possible, depending on the color of that shape.
+            In this game, you will see a series of shapes, either pentagons or stars. Each time you see a shape, your goal is to press the correct button fast as possible each trial
         </p>
         <p>
             The shape will look as follows:
@@ -18,7 +17,7 @@
     <div id = "stim"></div>
 
     <p>
-        And you will see the following, which tells which button you should press if the shape is a certain color.
+        And you will see the following, which tells which button you should press if you are presented with the current shape
 
     </p>
 
@@ -26,9 +25,16 @@
     <div id="query"></div>
 
     <p>
-        When you figure out which button to press, you should press that button over and over again as quickly as possible. In this case you should press "j", and then keep pressing as fast as you can
-        until you see a black "X". As soon as the black "X" is visible, you should to stop pressing the button immediately.
+         In this case you should press "j", as fast as you can.
+        </p>
+        <br>
+        <br?
 
+        <p>
+
+
+        However, sometimes, before you are able to respond, the shape will disappear and will be replaced
+        by a black "X". In these situations you are not to respond. Again if you see an X, the correct thing to do is to press no button.
     </p>
 
 
@@ -192,8 +198,8 @@
 
 //        ctxIn.fillStyle = "green";
 
-        drawcolor(ctxIn,2);
-        drawshapes(ctxIn,380,75,20,10,2);
+        drawcolor(ctxIn,1);
+        drawshapes(ctxIn,380,75,20,10,7);
 
 //        ctxIn.fillStyle = "red";
 //
@@ -219,7 +225,7 @@
         var stimcolor = "blue";
 
 
-        drawcolor(ctx, 2);
+        drawcolor(ctx, 1);
 
 
         drawshapes(ctx,centerx,centery,radius,radius_inner,2);

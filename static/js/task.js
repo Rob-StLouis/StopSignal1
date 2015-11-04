@@ -46,7 +46,7 @@ var instructionPages = [ // add as a list as many pages as you like
 ********************/
 
 
-var numbversions=40;
+var numbversions=24;
 var version =0;
 
 var rl = Math.random()>.5;
@@ -59,24 +59,31 @@ var total_score= 0;
 
 var multiplyer  = 1;
 
+var trial_type =[];
+
+var timingnum = 300;
+
+var RT= [];
+var responseTime=1000;
+
+
+
 
 //tell which side the colors show up on.
+//sometimes they alternated, now they are straightforward.
 if (rl){
-	for(i=0;i<numbversions/2; i++){
+	for(i=0;i<numbversions; i++){
 		rlstims.push(0);
-		rlstims.push(1)
 	}
 }else{
-	for(i=0;i<numbversions/2; i++){
+	for(i=0;i<numbversions; i++){
 		rlstims.push(1);
-		rlstims.push(0)
 }}
 
 var StroopExperiment = function() {
 
 	var wordon, // time word is presented
 	    listening = false,
-		listeningstart = false,
 		errorlistening = false;
 
 
@@ -84,7 +91,7 @@ var StroopExperiment = function() {
 	var stimNumber = 1;
 	var colorNumber = 2;
 
-	var trialNumber = 16;
+	var trialNumber = 32;
 
 	var thistrial = 0;
 
@@ -114,37 +121,37 @@ var StroopExperiment = function() {
 
 	var bonus_message= "";
 
-	switch(version ){
-		case(10):
-			multiplyer = 2;
-			var bonus_message = "This is a high-effort round, please try hard!";
-			break;
-		case(15):
-			multiplyer = 2;
-			var bonus_message = "This is a high-effort round, please try hard!";
-			break;
-		case(20):
-			multiplyer = 2;
-			var bonus_message = "This is a high-effort round, please try hard!";
-
-			break;
-		case(25):
-			multiplyer = 2;
-			var bonus_message = "This is a high-effort round, please try hard!";
-
-			break;
-		case(30):
-			multiplyer = 2;
-			var bonus_message = "This is a high-effort round, please try hard!";
-
-			break;
-		case(35):
-			multiplyer = 2;
-			var bonus_message = "This is a high-effort round, please try hard!";
-			break;
-
-
-	}
+	//switch(version ){
+	//	case(10):
+	//		multiplyer = 2;
+	//		var bonus_message = "This is a high-effort round, please try hard!";
+	//		break;
+	//	case(15):
+	//		multiplyer = 2;
+	//		var bonus_message = "This is a high-effort round, please try hard!";
+	//		break;
+	//	case(20):
+	//		multiplyer = 2;
+	//		var bonus_message = "This is a high-effort round, please try hard!";
+    //
+	//		break;
+	//	case(25):
+	//		multiplyer = 2;
+	//		var bonus_message = "This is a high-effort round, please try hard!";
+    //
+	//		break;
+	//	case(30):
+	//		multiplyer = 2;
+	//		var bonus_message = "This is a high-effort round, please try hard!";
+    //
+	//		break;
+	//	case(35):
+	//		multiplyer = 2;
+	//		var bonus_message = "This is a high-effort round, please try hard!";
+	//		break;
+    //
+    //
+	//}
 
 
 
@@ -172,31 +179,50 @@ var StroopExperiment = function() {
 	}
 
 	for (var i = 1; i <= trialNumber/2; i++) {
-		stimuli.push([2, 2, color2])
+		stimuli.push([7, 1, color2])
+	}
+
+	var stoptrial = [];
+
+
+
+	if(version !== 0) {
+
+
+		for (var i = 1; i <= trialNumber / 4; i++) {
+			stoptrial.push("stop")
+		}
+
+		for (var i = 1; i <= trialNumber * (3 / 4); i++) {
+			stoptrial.push("go")
+		}
+
+	}else{
+
+		for (var i = 1; i <= trialNumber; i++) {
+			stoptrial.push("go")
+		}
+
 	}
 
 
+	function median(values) {
 
-	//for (var i = 1; i <= trialNumber/4; i++) {
-	//	var colorindex = _.sample([0,1,2],1);
-	//	var shapeindex = _.sample([0,1,2],1);
-	//	stimuli.push([target_shapes[shapeindex], target_colors[colorindex],colorindex,shapeindex]);
-	//}
-    //
-	//var distract_shapes = _.without(stims,target_shapes[0],target_shapes[1],target_shapes[2]);
-    //
-    //
-	//for (var i = 1; i <= trialNumber*(3/4); i++) {
-	//	var colorindex = _.sample([0,1,2],1);
-	//	var shapeindex = _.sample([0,1,2,3,4,5],1);
-    //
-	//	stimuli.push([distract_shapes[shapeindex], target_colors[colorindex],colorindex,"none"]);
-    //
-	//}
+		values.sort( function(a,b) {return a - b;} );
 
-	//alert(stimuli.length);
+		var half = Math.floor(values.length/2);
 
-	//alert([target_shapes,distract_shapes]);
+		if(values.length % 2)
+			return values[half];
+		else
+			return (values[half-1] + values[half]) / 2.0;
+	}
+
+
+	if(version ===1){
+		responseTime = median(RT);
+	}
+
 
 
 
@@ -205,16 +231,19 @@ var StroopExperiment = function() {
 
 
 	stimuli = _.shuffle(stimuli);
+	stoptrial = _.shuffle(stoptrial);
 
 
 
 
-	var timingnum = [];
 
 
-	for (i=0; i < trialNumber;i++){
-		timingnum.push(1250 +(Math.random()*1000))
-	};
+
+	//for (i=0; i < trialNumber;i++){
+	//	timingnum.push(1250 +(Math.random()*1000))
+	//};
+	//stop signal task.
+
 
 	var trialscore = Array.apply(null, Array(trialNumber)).map(Number.prototype.valueOf,0);
 	var totalscore = 0;
@@ -352,7 +381,7 @@ var StroopExperiment = function() {
 	var next = function() {
 		if (stimuli.length===0) {
 			listening = false;
-
+			errorlistening = false;
 			finish();
 		}
 		else if (firsttrial===true){
@@ -367,55 +396,13 @@ var StroopExperiment = function() {
 			var ctxIn = canvasIn.getContext('2d');
 
 			ctxIn.font = "20px Arial";
-        //
-        //
-        //
-        //
-        //
-        //
-		//	ctxIn.fillText("Press",10,20);
-		//	ctxIn.fillText("S",25,45);
-        //
+
 			ctxIn.fillText("Get ready to start!",115,20);
 			ctxIn.fillText(bonus_message,115,45);
-        //
-		//	ctxIn.fillText("Press",190,20);
-		//	ctxIn.fillText("F",205,45);
-        //
-        //
-		//	ctxIn.fillText("Press",360,20);
-		//	ctxIn.fillText("J",375,45);
-        //
-		//	ctxIn.fillText("Press",450,20);
-		//	ctxIn.fillText("K",465,45);
-        //
-		//	ctxIn.fillText("Press",540,20);
-		//	ctxIn.fillText("L",555,45);
-        //
-		//	ctxIn.fillStyle = "black";
-        //
-		//	drawshapes(ctxIn,offset1+30,75,20,10,target_shapes[0]);
-        //
-		//	drawshapes(ctxIn,offset1+120,75,20,10,target_shapes[1]);
-        //
-		//	drawshapes(ctxIn,offset1+210,75,20,10,target_shapes[2]);
-        //
-		//	drawcolor(ctxIn,target_colors[0]);
-        //
-		//	drawshapes(ctxIn,offset2+30,75,20,10,9);
-        //
-		//	drawcolor(ctxIn,target_colors[1]);
-        //
-		//	drawshapes(ctxIn,offset2+120,75,20,10,9);
-        //
-		//	drawcolor(ctxIn,target_colors[2]);
-        //
-		//	drawshapes(ctxIn,offset2+210,75,20,10,9);
-        //
-		//	listeningstart = true;
-			firsttrial = false;
+
 			setTimeout(function(){
 				next()}, 1500);
+			firsttrial=false;
 
 
 
@@ -425,7 +412,7 @@ var StroopExperiment = function() {
 			adj_trialscore = 0;
 			hits = 0;
 			misses = 0;
-			rt_bonus = 0;
+			rt_bonus = "Good";
 
 			d3.select("#InstructionStim").remove();
 
@@ -434,11 +421,12 @@ var StroopExperiment = function() {
 
 
 			wordon = new Date().getTime();
-			timenum = timingnum.shift();
+			timenum = timingnum;
 			stim_end = wordon + timenum;
-			listening = true;
-			listeningstart= false;
-			errorlistening = false;
+			trial_type = stoptrial.shift();
+
+
+
 			d3.select("#query")
 				.append("canvas")
 				.attr("width", 600)
@@ -449,6 +437,14 @@ var StroopExperiment = function() {
 			var ctxIn = canvasIn.getContext('2d');
 
 			ctxIn.font = "20px Arial";
+
+			if(trial_type==="go"){
+				listening=true;
+				errorlistening=false;
+			}else{
+				listening=false;
+				errorlistening=true;
+			}
 
 
 
@@ -583,7 +579,7 @@ var StroopExperiment = function() {
 			//alert(typeof stim[2][0]);
 
 
-			show_word( stim[0],stim[1]);
+			show_word( stim[0],stim[1],trial_type);
 
 
 
@@ -610,9 +606,9 @@ var StroopExperiment = function() {
 
 			//colors
 
-			drawcolor(ctxIn,2);
+			drawcolor(ctxIn,1);
 
-			drawshapes(ctxIn,offset2,75,20,10,2);
+			drawshapes(ctxIn,offset2,75,20,10,7);
 
 			//drawcolor(ctxIn,target_colors[1]);
             //
@@ -628,40 +624,25 @@ var StroopExperiment = function() {
 
 			numresponse =0;
 
-			setTimeout(function(){
-				end_trial()}, timenum);
-			//	setTimeout(function(){
-			//		next();
-			//	},750);
-            //
-			//},timenum)
+			if(trial_type=="stop"){
+				setTimeout(function(){
+					stop_signal_show()}, timenum);
+				//	setTimeout(function(){
+				//		next();
+				//	},750);
+				//
+				//},timenum)
+
+			}
+
+
 
 		}
 	};
 
-	var response_handler_start = function(e) {
-
-
-
-		};
-
-
 	
 	var response_handler = function(e) {
 
-		if (!listeningstart && !listening) return;
-
-		if (!listening) {
-
-
-			var keyCode = e.keyCode,
-				response;
-
-			if (keyCode === 13) {
-				next()
-
-			}
-		}
 
 		if (!listening) return;
 
@@ -709,17 +690,26 @@ var StroopExperiment = function() {
 			//var hit = -1;
 			//}
 
+		var rt = new Date().getTime() - wordon;
+
 		if (stim[2] === response){
-			var hit = 1;
+			if (rt < responseTime) {
+				var hit = "correct";
+			}else{
+				var hit = "slow";
+
+			}
 			//alert([ typeof stim[2],typeof response,hit]);
 		}else{
-			var hit = -1;
+			var hit = "mistake";
 			//alert([typeof stim[2], typeof response,hit]);
 		}
-		var rt = new Date().getTime() - wordon;
+
 		//alert([stim,response]);
 
 		participant_score(hit,rt);
+
+		RT.push(rt);
 
 
 
@@ -740,6 +730,13 @@ var StroopExperiment = function() {
 			});
 
 		numresponse++;
+
+		if(trial_type==="go"){
+			end_trial();
+		}
+		//add the next trial here.
+
+		listening = false;
 
 
 
@@ -792,7 +789,7 @@ var StroopExperiment = function() {
 			//	break;
 		}
 
-		participant_score(-1,rt);
+		participant_score("after",rt);
 
 
 
@@ -803,7 +800,7 @@ var StroopExperiment = function() {
 			'shape': stim[1],
 			'time': "aftertrial",
 			'response': response,
-			'hit': -1,
+			'hit': "after",
 			'rt': rt,
 			'trial_duration': timenum,
 			'score':"",
@@ -825,6 +822,8 @@ var StroopExperiment = function() {
 		//	.style("margin","190px")
 		//	.text(adj_trialscore);
 
+		errorlistening = false;
+
 
 
 
@@ -836,52 +835,36 @@ var StroopExperiment = function() {
 
 	var participant_score = function(hit,rt){
 
-
-		trialscore[thistrial-1] = trialscore[thistrial-1]+hit;
-		totalscore = totalscore + hit;
+		//just calculate the bonus
 
 
 
-		if (rt_bonus ===0 && hit===1 ){
-			rt_bonus = 700.1 - rt;
+		switch(hit){
+			case "correct":
+				rt_bonus = "Good";
+				break;
+			case "mistake":
+				rt_bonus = "Error";
+				break;
+			case "slow":
+				rt_bonus = "Too Slow";
+				break;
+			case "after":
+				rt_bonus = "Don't Press"
 
 		}
-		if(hit === 1){
-			hits =hits +1
-		}else {
-			misses = misses+1
-		}
+
+
+
+
+		//trialscore[thistrial-1] = trialscore[thistrial-1]+hit;
+		//totalscore = totalscore + hit;
+
 
 
 	};
 
 
-
-	//var score_checker = function(x_rest){
-    //
-    //
-	//	var current_score = [];
-	//	var current_accuracy = [];
-	//	var move_ave=0;
-    //
-	//	if (thistrial<4){
-	//		var n = thistrial;
-	//	}else {
-	//		var n = 4;
-	//	}
-	//	for (i=0; i <n; i++){
-	//		var j = hitsvec < timenumevec[thistrial-i] - 750 /250)
-	//		var k = missesvec[thistrial-i];
-	//		current_score.append(j);
-	//		current_accuracy.append(k);
-	//		move_ave = if(j){move_ave+1}
-	//		current_accuracy +
-    //
-    //
-	//	}
-    //
-    //
-	//};
 
 
 
@@ -943,44 +926,55 @@ var StroopExperiment = function() {
 		//}
 
 		//txtcntx = document.getElementById('#canvasStim').getContext('2d');
-		ctx.fillStyle = "black";
-		if(thistrial >= 2){
-			//this is the score.
-			ctx.fillText("+", 295, 305);
-		}
-
-
-		//d3.select("#canvasStim")
-		//	.style("text-align","center")
-		//	.style("font-size","50px")
-		//	.style("font-weight","40")
-		//	.text(trialscore[thistrial-1]);
-
+		//ctx.fillStyle = "black";
+		//if(thistrial >= 2){
+		//	//this is the score.
+		//	ctx.fillText("+", 295, 305);
+		//}
 
 
 
 	};
 
-	var end_trial = function(){
+
+	var end_trial =function(){
+
+		d3.select("#canvasStim").remove();
+		d3.select("#InstructionStim").remove();
+		d3.select("#word").remove();
+
+		listening = false;
+		errorlistening= false;
+
+
+
+
+		remove_word();
+
+	};
+
+	var stop_signal_show = function(){
 		d3.select("#canvasStim").remove();
 		d3.select("#InstructionStim").remove();
 
 
-		listening=false;
-		errorlistening=true;
+		//listening=false;
+		//errorlistening=true;
 		errorstart = new Date().getTime();
 
-		d3.select("#score")
-			.append("div")
-			.attr("id","word")
-			.style("color","black")
-			.style("text-align","center")
-			.style("font-size","350px")
-			.style("font-weight","900")
-			.style("margin","190px")
-			.text("X");
 
-		setTimeout(remove_word,1000);
+
+			d3.select("#score")
+				.append("div")
+				.attr("id", "word")
+				.style("color", "black")
+				.style("text-align", "center")
+				.style("font-size", "350px")
+				.style("font-weight", "900")
+				.style("margin", "190px")
+				.text("X");
+
+		setTimeout(end_trial,750);
 
 
 	};
@@ -988,69 +982,34 @@ var StroopExperiment = function() {
 	var remove_word = function() {
 		errorlistening=false;
 
-		d3.select("#word").remove();
+		if(rt_bonus=="Good"){
+			var message_color="green";
+			if(trial_type==="stop"){
+				timingnum = timingnum +50;
+			}
 
-
-
-		//if (rt_bonus <0){
-        //
-		//	var score1 = ((hits * 10) - ( misses * 5)) * .9;
-        //
-        //
-		//} else{
-        //
-		//	var score1 = (hits * 10) - ( misses * 5) + rt_bonus
-		//}
-
-		var unad_count =  hits- misses;
-		//var ad_count = unad_count/((timenum-500) / 1000);
-
-		if(hits>misses){
-			//var score1 = ((unad_count)*(unad_count))/3 ;
-			var score1 = (Math.sqrt(Math.sqrt(Math.sqrt(unad_count)))*20 +( Math.random() -.5 ) *30) * multiplyer;
-
-		} else{
-
-			var score1 = 0;
+		}else{
+			var message_color="red";
+			if(trial_type==="stop"){
+				timingnum = timingnum -50;
+			}
 		}
 
 
 
-		//alert([trialscore,score1]);
 
 
-		 //adj_trialscore = Math.round(5 + score1 + (( Math.random() -.5)*3));
-
-		var adj_trialscore = Math.round(score1);
-
-		if (adj_trialscore<0){
-			adj_trialscore = 0;
-		}
-
-		if (score1<0){
-			adj_trialscore = 0;
-		}
-
-		//var displayc = "";
-		//var displayf = "";
-        //
-		//if (misses>1){
-		//	var displayc = "careful";
-		//}
-		//if (hits < ((timenum - 750) / 250) ){
-		//	var displayf = "faster"
-		//}
 
 
 		d3.select("#score")
 			.append("div")
 			.attr("id","word")
-			.style("color","black")
+			.style("color",message_color)
 			.style("text-align","center")
 			.style("font-size","150px")
 			.style("font-weight","400")
 			.style("margin","190px")
-			.text(adj_trialscore);
+			.text(rt_bonus);
 			//.text(displayf+" "+ displayc);
 
 
@@ -1147,7 +1106,7 @@ var Questionnaire = function() {
 	
 	$("#next").click(function () {
 	    record_responses();
-		alert( "You earned "+total_score+" points in the last game!" );
+		//alert( "You earned "+total_score+" points in the last game!" );
 		version = version +1;
 		if (version >= numbversions){
 			psiTurk.saveData({
